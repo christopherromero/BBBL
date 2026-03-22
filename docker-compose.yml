@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  bbbl-bot:
+    build: .
+    container_name: jace-league-archivist
+    restart: unless-stopped
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - GOOGLE_SHEET_ID=${GOOGLE_SHEET_ID}
+      - GOOGLE_CREDENTIALS_PATH=/app/credentials.json
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./credentials.json:/app/credentials.json:ro
