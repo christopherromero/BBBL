@@ -52,7 +52,7 @@ class GameRecordView(discord.ui.View):
         self.add_item(bracket_select)
         
         embed = discord.Embed(
-            title='🎮 Record a Game',
+            title='Record a Game',
             description='**Step 1/6:** Which bracket was this game in?',
             color=discord.Color.green()
         )
@@ -72,7 +72,7 @@ class GameRecordView(discord.ui.View):
         
         if len(players) < 2:
             await interaction.response.send_message(
-                '❌ Not enough players registered. Please register players first.',
+                'Not enough players registered. Please register players first.',
                 ephemeral=True
             )
             return
@@ -90,11 +90,11 @@ class GameRecordView(discord.ui.View):
         self.add_item(player_select)
         
         embed = discord.Embed(
-            title='🎮 Record a Game',
+            title='Record a Game',
             description=f'**Step 3/6:** Who played in this game?\n\n'
-                       f'📅 Date: {self.game_data["date"]}\n'
-                       f'📍 Location: {self.game_data["location"]}\n'
-                       f'💰 Bracket: {self.game_data["bracket"]}',
+                       f'Date: {self.game_data["date"]}\n'
+                       f'Location: {self.game_data["location"]}\n'
+                       f'Bracket: {self.game_data["bracket"]}',
             color=discord.Color.green()
         )
         
@@ -122,12 +122,12 @@ class GameRecordView(discord.ui.View):
         players_str = ', '.join(self.game_data['players'])
         
         embed = discord.Embed(
-            title='🎮 Record a Game',
+            title='Record a Game',
             description=f'**Step 4/6:** Who won the game?\n\n'
-                       f'📅 Date: {self.game_data["date"]}\n'
-                       f'📍 Location: {self.game_data["location"]}\n'
-                       f'💰 Bracket: {self.game_data["bracket"]}\n'
-                       f'👥 Players: {players_str}',
+                       f'Date: {self.game_data["date"]}\n'
+                       f'Location: {self.game_data["location"]}\n'
+                       f'Bracket: {self.game_data["bracket"]}\n'
+                       f'Players: {players_str}',
             color=discord.Color.green()
         )
         
@@ -157,7 +157,7 @@ class GameRecordView(discord.ui.View):
             players_str = ', '.join([p for p in self.game_data['players'] if p])
             
             embed = discord.Embed(
-                title='\u2705 Game Recorded!',
+                title='Game Recorded!',
                 description=f'The game has been successfully recorded.',
                 color=discord.Color.green()
             )
@@ -165,11 +165,11 @@ class GameRecordView(discord.ui.View):
             embed.add_field(name='Location', value=self.game_data['location'], inline=True)
             embed.add_field(name='Bracket', value=self.game_data['bracket'], inline=True)
             embed.add_field(name='Players', value=players_str, inline=False)
-            embed.add_field(name='\ud83c\udfc6 Winner', value=self.game_data['winner'], inline=True)
-            embed.add_field(name='\ud83c\udfaf Win Condition', value=self.game_data['win_condition'], inline=True)
+            embed.add_field(name='Winner', value=self.game_data['winner'], inline=True)
+            embed.add_field(name='Win Condition', value=self.game_data['win_condition'], inline=True)
         else:
             embed = discord.Embed(
-                title='\u274c Failed to Record Game',
+                title='Failed to Record Game',
                 description='An error occurred while recording the game. Please try again.',
                 color=discord.Color.red()
             )
@@ -277,23 +277,23 @@ class GamesCog(commands.Cog):
             players_str = ', '.join(players[:-1]) + f', and {players[-1]}' if len(players) > 1 else players[0] if players else 'None'
             
             embed = discord.Embed(
-                title='🎮 Most Recent Game',
+                title='Most Recent Game',
                 color=discord.Color.purple()
             )
             
-            embed.add_field(name='📅 Date', value=game.date, inline=True)
-            embed.add_field(name='📍 Location', value=game.location, inline=True)
-            embed.add_field(name='💰 Bracket', value=game.bracket, inline=True)
-            embed.add_field(name='👥 Players', value=players_str, inline=False)
-            embed.add_field(name='🏆 Winner', value=f'{game.winner}{commander_text}', inline=True)
+            embed.add_field(name='Date', value=game.date, inline=True)
+            embed.add_field(name='Location', value=game.location, inline=True)
+            embed.add_field(name='Bracket', value=game.bracket, inline=True)
+            embed.add_field(name='Players', value=players_str, inline=False)
+            embed.add_field(name='Winner', value=f'{game.winner}{commander_text}', inline=True)
             if game.win_condition:
-                embed.add_field(name='🎯 Win Condition', value=game.win_condition, inline=True)
+                embed.add_field(name='Win Condition', value=game.win_condition, inline=True)
             
             await interaction.followup.send(embed=embed)
             
         except Exception as e:
             await interaction.followup.send(
-                f'❌ An error occurred: {str(e)}',
+                f'An error occurred: {str(e)}',
                 ephemeral=True
             )
 

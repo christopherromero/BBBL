@@ -4,7 +4,8 @@ A Discord bot for managing MTG Budget League information stored in Google Sheets
 
 ## Features
 
-- **`/standings`** - View current standings for any bracket or all brackets
+- **`/standings`** - View current standings for a single bracket or all brackets
+- **`/league`** - View overall league standings, or a single player's overall record
 - **`/player`** - Get detailed information about a specific player
 - **`/players`** - List all registered players
 - **`/register`** - Register a new player in the league
@@ -113,6 +114,20 @@ Synced 6 command(s)
 /standings bracket:$60 Bracket
 ```
 Shows the current standings for the $60 bracket.
+
+Other options:
+- `/standings bracket:All Brackets` - Shows the top players in each bracket side-by-side.
+
+### Get Overall League
+```
+/league
+```
+Shows the combined league standings across every bracket, ranked by total wins, with the current leader called out.
+
+```
+/league player:Chris
+```
+Shows a single player's overall record (total wins, games played, win %, and overall rank).
 
 ### Get Player Info
 ```
@@ -240,10 +255,17 @@ The container will build and start automatically.
 - **SSH**: `sudo docker-compose down`
 
 #### Update the Bot
-1. Upload the updated files to your NAS
-2. Rebuild the container:
-   - **UI**: Project → Select `bbbl-bot` → Action → Build
-   - **SSH**: `sudo docker-compose up -d --build`
+
+1. Upload the updated files to `/volume1/docker/bbbl-bot`, overwriting the old ones.
+2. **UI (Container Manager)**:
+   1. **Project** → select `bbbl-bot` → **Action** → **Stop**.
+   2. **Action** → **Build** to rebuild the image.
+   3. **Action** → **Start** to recreate the container from the new image.
+3. **SSH** equivalent:
+   ```bash
+   cd /volume1/docker/bbbl-bot
+   sudo docker-compose up -d --build --force-recreate
+   ```
 
 #### View Logs
 - **UI**: Container Manager → Container → Select container → Logs

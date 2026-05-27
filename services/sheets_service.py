@@ -292,6 +292,36 @@ class GoogleSheetsService:
         
         return standings
     
+    def get_overall_standings(self) -> list[PlayerStanding]:
+        """Calculate overall league standings by aggregating wins/losses across all brackets."""
+        player_stats: dict[str, dict[str, int]] = {}
+
+        for bracket in BRACKETS:
+            try:
+                games = self.get_games_for_bracket(bracket)
+            except Exception:
+                continue
+
+            for game in games:
+                for player in game.players:
+                    if player not in player_stats:
+                        player_stats[player] = {'wins': 0, 'losses': 0}
+
+                    if player == game.winner:
+                        player_stats[player]['wins'] += 1
+                    else:
+                        player_stats[player]['losses'] += 1
+
+        standings = [
+            PlayerStanding(name=name, wins=stats['wins'], losses=stats['losses'])
+            for name, stats in player_stats.items()
+        ]
+
+        # Overall ranking is based on total wins only.
+        standings.sort(key=lambda x: -x.wins)
+
+        return standings
+
     def get_player_standings_all_brackets(self, player_name: str) -> dict[str, PlayerStanding]:
         """Get a player's standings across all brackets."""
         standings = {}

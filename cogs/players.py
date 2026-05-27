@@ -68,7 +68,7 @@ class PlayerRegistrationModal(discord.ui.Modal, title='Register New Player'):
         
         if success:
             embed = discord.Embed(
-                title='✅ Player Registered!',
+                title='Player Registered!',
                 color=discord.Color.green()
             )
             embed.add_field(name='Name', value=player.name, inline=True)
@@ -79,7 +79,7 @@ class PlayerRegistrationModal(discord.ui.Modal, title='Register New Player'):
             await interaction.response.send_message(embed=embed)
         else:
             await interaction.response.send_message(
-                '❌ Failed to register player. Please try again.',
+                'Failed to register player. Please try again.',
                 ephemeral=True
             )
 
@@ -117,13 +117,13 @@ class PlayersCog(commands.Cog):
             
             if not player:
                 await interaction.followup.send(
-                    f'❌ Player "{name}" not found.',
+                    f'Player "{name}" not found.',
                     ephemeral=True
                 )
                 return
             
             embed = discord.Embed(
-                title=f'📋 Player Info: {player.name}',
+                title=f'Player Info: {player.name}',
                 color=discord.Color.blue()
             )
             
@@ -151,7 +151,7 @@ class PlayersCog(commands.Cog):
             
         except Exception as e:
             await interaction.followup.send(
-                f'❌ An error occurred: {str(e)}',
+                f'An error occurred: {str(e)}',
                 ephemeral=True
             )
     
@@ -174,12 +174,12 @@ class PlayersCog(commands.Cog):
                 return
             
             embed = discord.Embed(
-                title='📜 Registered Players',
+                title='Registered Players',
                 color=discord.Color.blue()
             )
             
             player_list = '\n'.join([
-                f'• **{p.name}** - {p.commander}'
+                f'- **{p.name}** - {p.commander}'
                 for p in players
             ])
             
@@ -190,7 +190,7 @@ class PlayersCog(commands.Cog):
             
         except Exception as e:
             await interaction.followup.send(
-                f'❌ An error occurred: {str(e)}',
+                f'An error occurred: {str(e)}',
                 ephemeral=True
             )
 
